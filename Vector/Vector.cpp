@@ -36,7 +36,6 @@ const Vector2 Vector2::negativeInfinity = Vector2(std::numeric_limits<float>::lo
 const Vector2 Vector2::positiveInfinity = Vector2(std::numeric_limits<float>::max(), std::numeric_limits<float>::max());
 
 //Vector4
-//Logical operators
 bool Vector4::operator == (Vector4 const& p) const
 {
 	Vector4 p2(*this - p);
@@ -59,7 +58,6 @@ float Vector4::Magnitude() const
 	return sqrt(SqrMagnitude());
 }
 
-//Returns unit vector
 Vector4 Vector4::Normalize() const
 {
 	const float len = Magnitude();
@@ -89,12 +87,10 @@ Vector4 Vector4::LerpNoClamp(const Vector4& from, const Vector4& to, float t)
 	return to * t + from * (1 - t);
 }
 
-//Projects a vector on another vector
 Vector4 Vector4::Project(const Vector4& vector, const Vector4& normal)
 {
 	return normal * (Dot(vector, normal) / normal.SqrMagnitude());
 }
-
 
 //Vector3
 bool Vector3::operator==(Vector3 const& p) const
@@ -114,18 +110,10 @@ float Vector3::SqrMagnitude() const
 	return (float)((double)x * (double)x + (double)y * (double)y + (double)z * (double)z);
 }
 
-
 float Vector3::Magnitude() const
 {
 	return sqrt(SqrMagnitude());
 }
-
-#if _HAS_CXX17
-// std::string_view Vector3::ToString() const
-// {
-// 	return std::string_view(std::to_string(x) + ", " + std::to_string(y) + ", " + std::to_string(z));
-// }
-#endif
 
 float Vector3::Dot(const Vector3& lhs, const Vector3& rhs)
 {
@@ -200,16 +188,13 @@ Vector3 Vector3::Reflect(const Vector3& vector, const Vector3& normal)
 	return Vector3(dp * normal.x + vector.x, dp * normal.y + vector.y, dp * normal.z + vector.z);
 }
 
-
 Vector3 Vector3::Normalize() const
 {
 	const float len = Magnitude();
 	return Vector3(x / len, y / len, z / len);
 }
 
-
 //Vector2
-
 bool Vector2::operator==(Vector2 const& p) const
 {
 	Vector2 p2(*this - p);
@@ -303,7 +288,6 @@ std::string Vector2::ToString(int precision) const
 	return std::string(buffer);
 }
 
-
 std::string Vector3::ToString(int precision) const
 {
 	char buffer[134];
@@ -322,12 +306,10 @@ std::string Vector4::ToString(int precision) const
 	return std::string(buffer);
 }
 
-
-
 float clamp(float x, float min, float max)
 {
 	if (x < min) x = min;
-	if (x > max) x = max;
+	else if (x > max) x = max;
 
 	return x;
 }
