@@ -140,7 +140,7 @@ float  Vector3::Distance(const Vector3& from, const Vector3& to)
 
 Vector3 Vector3::Lerp(const Vector3& from, const Vector3& to, float t)
 {
-	clamp(t, 0, 1);
+	t = clamp(t, 0, 1);
 	
 	return to *t + from * (1 - t);
 }
@@ -243,7 +243,7 @@ float Vector2::Dot(const Vector2& lhs, const Vector2& rhs)
 
 Vector2 Vector2::Lerp(const Vector2& from, const Vector2& to, float t)
 {
-	clamp(t, 0, 1);
+	t = clamp(t, 0, 1);
 
 	return to * t + from * (1 - t);
 }
