@@ -199,8 +199,8 @@ bool Vector3::IsInsideTriangle(const Vector3& point, const Vector3& a, const Vec
 	float area1 = TriangleArea(point, b, c);
 	float area2 = TriangleArea(a, point, c);
 	float area3 = TriangleArea(a, b, point);
-
-	return (area == area1 + area2 + area3);
+	
+	return fabs(area - (area1 + area2 + area3)) < FLT_EPSILON;
 }
 
 Vector3 Vector3::Normalize() const
@@ -294,7 +294,7 @@ Vector2 Vector2::Perpendicular(const Vector2& vector)
 }
 
 float Vector2::TriangleArea(const Vector2& a, const Vector2& b, const Vector2& c) {
-	return abs(((double)a.x * ((double)b.y - c.y) + (double)b.x * ((double)c.y - a.y) + (double)c.x * ((double)a.y - b.y)) / 2.0);
+	return (float)abs(((double)a.x * ((double)b.y - c.y) + (double)b.x * ((double)c.y - a.y) + (double)c.x * ((double)a.y - b.y)) / 2.0);
 }
 
 bool Vector2::IsInsideTriangle(const Vector2& point, const Vector2& a, const Vector2& b, const Vector2& c) {
@@ -304,7 +304,7 @@ bool Vector2::IsInsideTriangle(const Vector2& point, const Vector2& a, const Vec
 	float area2 = TriangleArea(a, point, c);
 	float area3 = TriangleArea(a, b, point);
 
-	return (area == area1 + area2 + area3);
+	return fabs(area - (area1 + area2 + area3)) < FLT_EPSILON;
 }
 
 //String operations
