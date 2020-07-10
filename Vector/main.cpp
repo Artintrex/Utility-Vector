@@ -11,7 +11,7 @@ int main()
 	Vector3 secondVector(-2, 3, 0);
  
 	Vector3 thirdVector = Vector3::Lerp(firstVector, secondVector, 0.1);
-
+	
     std::cout << thirdVector.x << " " << thirdVector.y << " " << thirdVector.z << "\n";
 	std::cout << "Distance is: " << Vector3::Distance(thirdVector, firstVector) << "\n";
 
@@ -19,6 +19,9 @@ int main()
 	
 	std::cout << "Angle between " << Vector3(3, 4, 0).ToString() << " and " << Vector3(0, 5, 5).ToString() << " is "
 	<< Vector3::Angle(Vector3(3, 4, 0), Vector3(0, 5, 5)) << "\n";
+
+	std::cout << "Negative Infinity: " << Vector3::negativeInfinity.x << "\n";
+	std::cout << "Positive Infinity: " << Vector3::positiveInfinity.x << "\n";
 	
 	std::cout << "\n\n";
 

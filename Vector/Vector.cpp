@@ -12,8 +12,8 @@ float clamp(float x, float min, float max);
 
 const Vector4 Vector4::one = Vector4(1, 1, 1, 1);
 const Vector4 Vector4::zero = Vector4(0, 0, 0, 0);
-const Vector4 Vector4::negativeInfinity = Vector4(std::numeric_limits<float>::lowest(), std::numeric_limits<float>::lowest(), std::numeric_limits<float>::lowest(), std::numeric_limits<float>::lowest());
-const Vector4 Vector4::positiveInfinity = Vector4(std::numeric_limits<float>::max(), std::numeric_limits<float>::max(), std::numeric_limits<float>::max(), std::numeric_limits<float>::max());
+const Vector4 Vector4::negativeInfinity = Vector4(-std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity());
+const Vector4 Vector4::positiveInfinity = Vector4(std::numeric_limits<float>::infinity(), std::numeric_limits<float>::infinity(), std::numeric_limits<float>::infinity(), std::numeric_limits<float>::infinity());
 
 const Vector3 Vector3::forward = Vector3(0, 0, 1);
 const Vector3 Vector3::back = Vector3(0, 0, -1);
@@ -23,8 +23,8 @@ const Vector3 Vector3::up = Vector3(0, 1, 0);
 const Vector3 Vector3::down = Vector3(0, -1, 0);
 const Vector3 Vector3::one = Vector3(1, 1, 1);
 const Vector3 Vector3::zero = Vector3(0, 0, 0);
-const Vector3 Vector3::negativeInfinity = Vector3(std::numeric_limits<float>::lowest(), std::numeric_limits<float>::lowest(), std::numeric_limits<float>::lowest());
-const Vector3 Vector3::positiveInfinity = Vector3(std::numeric_limits<float>::max(), std::numeric_limits<float>::max(), std::numeric_limits<float>::max());
+const Vector3 Vector3::negativeInfinity = Vector3(-std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity());
+const Vector3 Vector3::positiveInfinity = Vector3(std::numeric_limits<float>::infinity(), std::numeric_limits<float>::infinity(), std::numeric_limits<float>::infinity());
 
 const Vector2 Vector2::left = Vector2(-1, 0);
 const Vector2 Vector2::right = Vector2(1, 0);
@@ -32,8 +32,8 @@ const Vector2 Vector2::up = Vector2(0, 1);
 const Vector2 Vector2::down = Vector2(0, -1);
 const Vector2 Vector2::one = Vector2(1, 1);
 const Vector2 Vector2::zero = Vector2(0, 0);
-const Vector2 Vector2::negativeInfinity = Vector2(std::numeric_limits<float>::lowest(), std::numeric_limits<float>::lowest());
-const Vector2 Vector2::positiveInfinity = Vector2(std::numeric_limits<float>::max(), std::numeric_limits<float>::max());
+const Vector2 Vector2::negativeInfinity = Vector2(-std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity());
+const Vector2 Vector2::positiveInfinity = Vector2(std::numeric_limits<float>::infinity(), std::numeric_limits<float>::infinity());
 
 //Vector4
 bool Vector4::operator == (Vector4 const& p) const
