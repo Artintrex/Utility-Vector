@@ -188,6 +188,21 @@ Vector3 Vector3::Reflect(const Vector3& vector, const Vector3& normal)
 	return Vector3(dp * normal.x + vector.x, dp * normal.y + vector.y, dp * normal.z + vector.z);
 }
 
+float Vector3::TriangleArea(const Vector3& a, const Vector3& b, const Vector3& c) {
+	return abs(Vector3::Cross((a - c), (b - c)).Magnitude() / 2);
+}
+
+
+bool Vector3::IsInsideTriangle(const Vector3& point, const Vector3& a, const Vector3& b, const Vector3& c) {
+	float area = TriangleArea(a, b, c);
+
+	float area1 = TriangleArea(point, b, c);
+	float area2 = TriangleArea(a, point, c);
+	float area3 = TriangleArea(a, b, point);
+
+	return (area == area1 + area2 + area3);
+}
+
 Vector3 Vector3::Normalize() const
 {
 	const float len = Magnitude();
@@ -276,6 +291,20 @@ Vector2 Vector2::Reflect(const Vector2& vector, const Vector2& normal)
 Vector2 Vector2::Perpendicular(const Vector2& vector)
 {
 	return Vector2(-vector.y, vector.x);
+}
+
+float Vector2::TriangleArea(const Vector2& a, const Vector2& b, const Vector2& c) {
+	return abs(((double)a.x * ((double)b.y - c.y) + (double)b.x * ((double)c.y - a.y) + (double)c.x * ((double)a.y - b.y)) / 2.0);
+}
+
+bool Vector2::IsInsideTriangle(const Vector2& point, const Vector2& a, const Vector2& b, const Vector2& c) {
+	float area = TriangleArea(a, b, c);
+
+	float area1 = TriangleArea(point, b, c);
+	float area2 = TriangleArea(a, point, c);
+	float area3 = TriangleArea(a, b, point);
+
+	return (area == area1 + area2 + area3);
 }
 
 //String operations
