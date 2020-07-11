@@ -127,10 +127,7 @@ Vector3 Vector3::Cross(const Vector3& lhs, const Vector3& rhs)
 
 float Vector3::Angle(const Vector3& from, const Vector3& to)
 {
-	Vector3 from_Norm = from.Normalize();
-	Vector3 to_Norm = to.Normalize();
-	
-	return acos(clamp(Dot(from_Norm, to_Norm), -1.0f, 1.0f)) * 57.29578f;
+	return acos(clamp(Dot(from.Normalize(), to.Normalize()), -1.0f, 1.0f)) * 57.29578f;
 }
 
 float  Vector3::Distance(const Vector3& from, const Vector3& to)
@@ -225,10 +222,7 @@ Vector2 Vector2::Normalize() const
 
 float Vector2::Angle(const Vector2& from, const Vector2& to)
 {
-	Vector2 from_Norm = from.Normalize();
-	Vector2 to_Norm = to.Normalize();
-
-	return acos(clamp(Dot(from_Norm, to_Norm), -1.0f, 1.0f)) * 57.29578f;
+	return acos(clamp(Dot(from.Normalize(), to.Normalize()), -1.0f, 1.0f)) * 57.29578f;
 }
 
 float Vector2::Distance(const Vector2& from, const Vector2& to)
