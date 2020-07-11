@@ -20,9 +20,12 @@ int main()
 	std::cout << "Angle between " << Vector3(3, 4, 0).ToString() << " and " << Vector3(0, 5, 5).ToString() << " is "
 	<< Vector3::Angle(Vector3(3, 4, 0), Vector3(0, 5, 5)) << "\n";
 
-	std::cout << "Negative Infinity: " << Vector3::negativeInfinity.x << "\n";
-	std::cout << "Positive Infinity: " << Vector3::positiveInfinity.x << "\n";
+	std::cout << "Negative Infinity: " << Vector3::negativeInfinity.ToString() << "\n";
+	std::cout << "Positive Infinity: " << Vector3::positiveInfinity.ToString() << "\n";
 	
+	std::cout << "Triangle Collision Check: " << Vector2::IsInsideTriangle(Vector2(3.5,4), Vector2(4,5), Vector2(3,2), Vector2(-5,-3)) << "\n";
+	std::cout << "Triangle Area: " << Vector2::TriangleArea(Vector2(4, 5), Vector2(3, 2), Vector2(-5, -3)) << "\n";
+
 	std::cout << "\n\n";
 
 	return 0;

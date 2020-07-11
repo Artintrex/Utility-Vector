@@ -242,6 +242,12 @@ struct Vector3 {
 	//Reflects a vector using normal vector
 	static Vector3 Reflect(const Vector3& vector, const Vector3& normal);
 
+	//Calculates area of a triangle formed by three given vectors
+	static float TriangleArea(const Vector3& a, const Vector3& b, const Vector3& c);
+
+	//Checks if a point is inside a triangle formed by vectors a,b,c 
+	static bool IsInsideTriangle(const Vector3& point, const Vector3& a, const Vector3& b, const Vector3& c);
+
 	//Returns unit vector
 	[[nodiscard]]
 	Vector3 Normalize() const;
@@ -440,6 +446,12 @@ struct Vector2
 
 	//Reflects a vector using normal vector
 	static Vector2 Reflect(const Vector2& vector, const Vector2& normal);
+
+	//Calculates area of a triangle formed by three given vectors
+	static float TriangleArea(const Vector2& a, const Vector2& b, const Vector2& c);
+
+	//Checks if a point is inside a triangle formed by vectors a,b,c 
+	static bool IsInsideTriangle(const Vector2& point, const Vector2& a, const Vector2& b, const Vector2& c);
 
 	//Returns unit vector
 	[[nodiscard]]
