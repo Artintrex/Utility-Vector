@@ -135,16 +135,16 @@ float  Vector3::Distance(const Vector3& from, const Vector3& to)
 	return (from - to).Magnitude();
 }
 
-Vector3 Vector3::Lerp(const Vector3& from, const Vector3& to, float t)
+Vector3 Vector3::Lerp(const Vector3& from, const Vector3& to, float delta)
 {
-	t = clamp(t, 0, 1);
+	delta = clamp(delta, 0, 1);
 	
-	return to *t + from * (1 - t);
+	return to * delta + from * (1 - delta);
 }
 
-Vector3 Vector3::LerpNoClamp(const Vector3& from, const Vector3& to, float t)
+Vector3 Vector3::LerpNoClamp(const Vector3& from, const Vector3& to, float delta)
 {
-	return to * t + from * (1 - t);
+	return to * delta + from * (1 - delta);
 }
 
 Vector3 Vector3::MoveTowards(const Vector3& from, const Vector3& to, float delta)
@@ -170,13 +170,13 @@ Vector3 Vector3::Project(const Vector3& vector, const Vector3& normal)
 	return Vector3(normal.x * dp, normal.y * dp, normal.z * dp);
 }
 
-Vector3 Vector3::ProjectOnPlane(const Vector3& vector, const Vector3& normalPlane)
+Vector3 Vector3::ProjectOnPlane(const Vector3& vector, const Vector3& planeNormal)
 {
-	float magnitude = normalPlane.SqrMagnitude();
+	float magnitude = planeNormal.SqrMagnitude();
 	if (magnitude < FLT_EPSILON)
 		return vector;
-	float dp = Dot(vector, normalPlane);
-	return Vector3(vector.x - normalPlane.x * dp / magnitude, vector.y - normalPlane.y * dp / magnitude, vector.z - normalPlane.z * dp / magnitude);
+	float dp = Dot(vector, planeNormal);
+	return Vector3(vector.x - planeNormal.x * dp / magnitude, vector.y - planeNormal.y * dp / magnitude, vector.z - planeNormal.z * dp / magnitude);
 }
 
 Vector3 Vector3::Reflect(const Vector3& vector, const Vector3& normal)
@@ -186,11 +186,10 @@ Vector3 Vector3::Reflect(const Vector3& vector, const Vector3& normal)
 }
 
 float Vector3::TriangleArea(const Vector3& a, const Vector3& b, const Vector3& c) {
-	return abs(Vector3::Cross((a - c), (b - c)).Magnitude() / 2);
+	return abs(Cross((a - c), (b - c)).Magnitude() / 2);
 }
 
-
-bool Vector3::IsInsideTriangle(const Vector3& point, const Vector3& a, const Vector3& b, const Vector3& c) {
+bool Vector3::PointTriangleIntersection(const Vector3& point, const Vector3& a, const Vector3& b, const Vector3& c) {
 	float area = TriangleArea(a, b, c);
 
 	float area1 = TriangleArea(point, b, c);
@@ -198,6 +197,56 @@ bool Vector3::IsInsideTriangle(const Vector3& point, const Vector3& a, const Vec
 	float area3 = TriangleArea(a, b, point);
 	
 	return fabs(area - (area1 + area2 + area3)) < FLT_EPSILON;
+}
+
+bool Vector3::LinePlaneIntersection(Vector3& intersection, const Vector3& direction, const Vector3& origin, const Vector3& normal, const Vector3& plane)
+{
+	float d = Dot(normal, direction);
+
+	//Check if they are parallel
+	if (fabs(d) < FLT_EPSILON) return false;
+
+	float x = (Dot(normal, plane - origin)) / d;
+
+	//Check if the plane is behind the line
+	if (x < 0) return false;
+	
+	intersection = origin + direction * x;
+
+	return true;
+}
+
+bool Vector3::LineTriangleIntersection(Vector3& intersection, const Vector3& direction, const Vector3& origin, const Vector3& a, const Vector3& b, const Vector3& c)
+{
+	Vector3 edge1, edge2, h, s, q;
+	float d, u, v;
+	
+	edge1 = b - a;
+	edge2 = c - a;
+	
+	Vector3 normal = Cross(direction, edge2);
+	
+	d = Dot(edge1, normal);
+	
+	if (fabs(d) < FLT_EPSILON) return false;
+	
+	d = (float)(1.0 / d);
+	s = origin - a;
+	u = d * Dot(s,h);
+	if (u < 0.0 || u > 1.0)
+		return false;
+	q = Cross(s, edge1);
+	v = d * Dot(direction, q);
+	if (v < 0.0 || (double)u + v > 1.0)
+		return false;
+	
+	float t = d * Dot(edge2, q);
+	if (t > FLT_EPSILON)
+	{
+		intersection = origin + direction * t;
+		return true;
+	}
+		return false;
 }
 
 Vector3 Vector3::Normalize() const
@@ -250,16 +299,16 @@ float Vector2::Dot(const Vector2& lhs, const Vector2& rhs)
 	return lhs.x * rhs.x + lhs.y * rhs.y;
 }
 
-Vector2 Vector2::Lerp(const Vector2& from, const Vector2& to, float t)
+Vector2 Vector2::Lerp(const Vector2& from, const Vector2& to, float delta)
 {
-	t = clamp(t, 0, 1);
+	delta = clamp(delta, 0, 1);
 
-	return to * t + from * (1 - t);
+	return to * delta + from * (1 - delta);
 }
 
-Vector2 Vector2::LerpNoClamp(const Vector2& from, const Vector2& to, float t)
+Vector2 Vector2::LerpNoClamp(const Vector2& from, const Vector2& to, float delta)
 {
-	return to * t + from * (1 - t);
+	return to * delta + from * (1 - delta);
 }
 
 Vector2 Vector2::MoveTowards(const Vector2& from, const Vector2& to, float delta)
@@ -291,7 +340,7 @@ float Vector2::TriangleArea(const Vector2& a, const Vector2& b, const Vector2& c
 	return (float)abs(((double)a.x * ((double)b.y - c.y) + (double)b.x * ((double)c.y - a.y) + (double)c.x * ((double)a.y - b.y)) / 2.0);
 }
 
-bool Vector2::IsInsideTriangle(const Vector2& point, const Vector2& a, const Vector2& b, const Vector2& c) {
+bool Vector2::PointTriangleIntersection(const Vector2& point, const Vector2& a, const Vector2& b, const Vector2& c) {
 	float area = TriangleArea(a, b, c);
 
 	float area1 = TriangleArea(point, b, c);

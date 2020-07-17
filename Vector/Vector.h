@@ -225,10 +225,10 @@ struct Vector3 {
 	static float Distance(const Vector3& from, const Vector3& to);
 
 	//Linear interpolates between to vectors
-	static Vector3 Lerp(const Vector3& from, const Vector3& to, float t);
+	static Vector3 Lerp(const Vector3& from, const Vector3& to, float delta);
 
 	//Lerp without clamping
-	static Vector3 LerpNoClamp(const Vector3& from, const Vector3& to, float t);
+	static Vector3 LerpNoClamp(const Vector3& from, const Vector3& to, float delta);
 
 	//Moves a vector to target by delta
 	static Vector3 MoveTowards(const Vector3& from, const Vector3& to, float delta);
@@ -237,7 +237,7 @@ struct Vector3 {
 	static Vector3 Project(const Vector3& vector, const Vector3& normal);
 
 	//Projects a vector on a plane
-	static Vector3 ProjectOnPlane(const Vector3& vector, const Vector3& normalPlane);
+	static Vector3 ProjectOnPlane(const Vector3& vector, const Vector3& planeNormal);
 
 	//Reflects a vector using normal vector
 	static Vector3 Reflect(const Vector3& vector, const Vector3& normal);
@@ -246,8 +246,16 @@ struct Vector3 {
 	static float TriangleArea(const Vector3& a, const Vector3& b, const Vector3& c);
 
 	//Checks if a point is inside a triangle formed by vectors a,b,c 
-	static bool IsInsideTriangle(const Vector3& point, const Vector3& a, const Vector3& b, const Vector3& c);
+	static bool PointTriangleIntersection(const Vector3& point, const Vector3& a, const Vector3& b, const Vector3& c);
 
+	//Checks if and where a line intersects with given plane, returns true if there is intersection. Output is saved to intersection
+	//Caution: Make sure direction vector is normalized !
+	static bool LinePlaneIntersection(Vector3& intersection, const Vector3& direction, const Vector3& origin, const Vector3& normal, const Vector3& plane);
+
+	//Checks if and where a line intersects with given triangle, returns true if there is intersection. Output is saved to intersection. Uses Moller-Trumbore algorithm
+	//Caution: Make sure direction vector is normalized !
+	static bool LineTriangleIntersection(Vector3& intersection, const Vector3& direction, const Vector3& origin, const Vector3& a, const Vector3& b, const Vector3& c);
+	
 	//Returns unit vector
 	[[nodiscard]]
 	Vector3 Normalize() const;
@@ -433,10 +441,10 @@ struct Vector2
 	static float Distance(const Vector2& from, const Vector2& to);
 
 	//Linear interpolates between to vectors
-	static Vector2 Lerp(const Vector2& from, const Vector2& to, float t);
+	static Vector2 Lerp(const Vector2& from, const Vector2& to, float delta);
 
 	//Lerp without clamping
-	static Vector2 LerpNoClamp(const Vector2& from, const Vector2& to, float t);
+	static Vector2 LerpNoClamp(const Vector2& from, const Vector2& to, float delta);
 
 	//Moves a vector to target by delta
 	static Vector2 MoveTowards(const Vector2& from, const Vector2& to, float delta);
@@ -451,7 +459,7 @@ struct Vector2
 	static float TriangleArea(const Vector2& a, const Vector2& b, const Vector2& c);
 
 	//Checks if a point is inside a triangle formed by vectors a,b,c 
-	static bool IsInsideTriangle(const Vector2& point, const Vector2& a, const Vector2& b, const Vector2& c);
+	static bool PointTriangleIntersection(const Vector2& point, const Vector2& a, const Vector2& b, const Vector2& c);
 
 	//Returns unit vector
 	[[nodiscard]]
