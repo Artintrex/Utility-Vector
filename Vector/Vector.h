@@ -68,6 +68,8 @@ struct Vector4
 
 	~Vector4() = default;
 
+	
+
 	/// Arithmetic operators
 	Vector4 operator + (const Vector4& p) const
 	{
@@ -90,16 +92,7 @@ struct Vector4
 	}
 
 	/// Assignment operators
-	Vector4& operator=(const Vector4& other)
-	{
-		if (this == &other)
-			return *this;
-		x = other.x;
-		y = other.y;
-		z = other.z;
-		w = other.w;
-		return *this;
-	}
+	Vector4& operator=(const Vector4& other) = default;
 
 	Vector4& operator=(Vector4&& other) noexcept
 	{
@@ -307,15 +300,7 @@ struct Vector3 {
 	}
 
 	/// Assignment operators
-	Vector3& operator=(const Vector3& other)
-	{
-		if (this == &other)
-			return *this;
-		x = other.x;
-		y = other.y;
-		z = other.z;
-		return *this;
-	}
+	Vector3& operator=(const Vector3& other) = default;
 
 	Vector3& operator=(Vector3&& other) noexcept
 	{
@@ -505,14 +490,7 @@ struct Vector2
 	}
 
 	/// Assignment operators
-	Vector2& operator=(const Vector2& other)
-	{
-		if (this == &other)
-			return *this;
-		x = other.x;
-		y = other.y;
-		return *this;
-	}
+	Vector2& operator=(const Vector2& other) = default;
 
 	Vector2& operator=(Vector2&& other) noexcept
 	{
