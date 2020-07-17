@@ -38,19 +38,17 @@ const Vector2 Vector2::positiveInfinity = Vector2(std::numeric_limits<float>::in
 //Vector4
 bool Vector4::operator == (Vector4 const& p) const
 {
-	Vector4 p2(*this - p);
-	return (double)p2.SqrMagnitude() < DBL_EPSILON;
+	return static_cast<double>((*this - p).SqrMagnitude()) < DBL_EPSILON;
 }
 
 bool Vector4::operator !=(Vector4 const& p) const
 {
-	Vector4 p2(*this - p);
-	return (double)p2.SqrMagnitude() >= DBL_EPSILON;
+	return static_cast<double>((*this - p).SqrMagnitude()) >= DBL_EPSILON;
 }
 
 float Vector4::SqrMagnitude() const
 {
-	return (float)((double)x * (double)x + (double)y * (double)y + (double)z * (double)z + (double)w * (double)w);
+	return static_cast<float>(static_cast<double>(x) * x + static_cast<double>(y) * y + static_cast<double>(z) * z + static_cast<double>(w) * w);
 }
 
 float Vector4::Magnitude() const
@@ -95,19 +93,17 @@ Vector4 Vector4::Project(const Vector4& vector, const Vector4& normal)
 //Vector3
 bool Vector3::operator==(Vector3 const& p) const
 {
-	Vector3 p2(*this - p);
-	return (double)p2.SqrMagnitude() < DBL_EPSILON;
+	return static_cast<double>((*this - p).SqrMagnitude()) < DBL_EPSILON;
 }
 
 bool Vector3::operator!=(Vector3 const& p) const
 {
-	Vector3 p2(*this - p);
-	return (double)p2.SqrMagnitude() >= DBL_EPSILON;
+	return static_cast<double>((*this - p).SqrMagnitude()) >= DBL_EPSILON;
 }
 
 float Vector3::SqrMagnitude() const
 {
-	return (float)((double)x * (double)x + (double)y * (double)y + (double)z * (double)z);
+	return static_cast<float>(static_cast<double>(x) * x + static_cast<double>(y) * y + static_cast<double>(z) * z);
 }
 
 float Vector3::Magnitude() const
@@ -142,16 +138,16 @@ Vector3 Vector3::Lerp(const Vector3& from, const Vector3& to, float delta)
 	return to * delta + from * (1 - delta);
 }
 
-Vector3 Vector3::LerpNoClamp(const Vector3& from, const Vector3& to, float delta)
+Vector3 Vector3::LerpNoClamp(const Vector3& from, const Vector3& to, const float delta)
 {
 	return to * delta + from * (1 - delta);
 }
 
-Vector3 Vector3::MoveTowards(const Vector3& from, const Vector3& to, float delta)
+Vector3 Vector3::MoveTowards(const Vector3& from, const Vector3& to, const float delta)
 {
-	Vector3 direction = to - from;
+	const Vector3 direction = to - from;
 
-	float magnitude = direction.Magnitude();
+	const float magnitude = direction.Magnitude();
 
 	if (magnitude <= delta || delta < FLT_EPSILON)
 	{
@@ -163,25 +159,25 @@ Vector3 Vector3::MoveTowards(const Vector3& from, const Vector3& to, float delta
 
 Vector3 Vector3::Project(const Vector3& vector, const Vector3& normal)
 {
-	float magnitude = normal.SqrMagnitude();
+	const float magnitude = normal.SqrMagnitude();
 	if (magnitude < FLT_EPSILON)
 		return zero;
-	float dp = Dot(vector, normal) / magnitude;
+	const float dp = Dot(vector, normal) / magnitude;
 	return Vector3(normal.x * dp, normal.y * dp, normal.z * dp);
 }
 
 Vector3 Vector3::ProjectOnPlane(const Vector3& vector, const Vector3& planeNormal)
 {
-	float magnitude = planeNormal.SqrMagnitude();
+	const float magnitude = planeNormal.SqrMagnitude();
 	if (magnitude < FLT_EPSILON)
 		return vector;
-	float dp = Dot(vector, planeNormal);
+	const float dp = Dot(vector, planeNormal);
 	return Vector3(vector.x - planeNormal.x * dp / magnitude, vector.y - planeNormal.y * dp / magnitude, vector.z - planeNormal.z * dp / magnitude);
 }
 
 Vector3 Vector3::Reflect(const Vector3& vector, const Vector3& normal)
 {
-	float dp = -2 * Dot(normal, vector);
+	const float dp = -2 * Dot(normal, vector);
 	return Vector3(dp * normal.x + vector.x, dp * normal.y + vector.y, dp * normal.z + vector.z);
 }
 
@@ -190,23 +186,23 @@ float Vector3::TriangleArea(const Vector3& a, const Vector3& b, const Vector3& c
 }
 
 bool Vector3::PointTriangleIntersection(const Vector3& point, const Vector3& a, const Vector3& b, const Vector3& c) {
-	float area = TriangleArea(a, b, c);
+	const float area = TriangleArea(a, b, c);
 
-	float area1 = TriangleArea(point, b, c);
-	float area2 = TriangleArea(a, point, c);
-	float area3 = TriangleArea(a, b, point);
+	const float area1 = TriangleArea(point, b, c);
+	const float area2 = TriangleArea(a, point, c);
+	const float area3 = TriangleArea(a, b, point);
 	
 	return fabs(area - (area1 + area2 + area3)) < FLT_EPSILON;
 }
 
 bool Vector3::LinePlaneIntersection(Vector3& intersection, const Vector3& direction, const Vector3& origin, const Vector3& normal, const Vector3& plane)
 {
-	float d = Dot(normal, direction);
+	const float d = Dot(normal, direction);
 
 	//Check if they are parallel
 	if (fabs(d) < FLT_EPSILON) return false;
 
-	float x = (Dot(normal, plane - origin)) / d;
+	const float x = (Dot(normal, plane - origin)) / d;
 
 	//Check if the plane is behind the line
 	if (x < 0) return false;
@@ -217,30 +213,28 @@ bool Vector3::LinePlaneIntersection(Vector3& intersection, const Vector3& direct
 }
 
 bool Vector3::LineTriangleIntersection(Vector3& intersection, const Vector3& direction, const Vector3& origin, const Vector3& a, const Vector3& b, const Vector3& c)
-{
-	Vector3 edge1, edge2, h, s, q;
-	float d, u, v;
+{	
+	const Vector3 edge1 = b - a;
+	const Vector3 edge2 = c - a;
 	
-	edge1 = b - a;
-	edge2 = c - a;
+	const Vector3 normal = Cross(direction, edge2);
 	
-	Vector3 normal = Cross(direction, edge2);
-	
-	d = Dot(edge1, normal);
+	float d = Dot(edge1, normal);
 	
 	if (fabs(d) < FLT_EPSILON) return false;
 	
-	d = (float)(1.0 / d);
-	s = origin - a;
-	u = d * Dot(s,h);
+	d = (1.0f / d);
+	
+	const Vector3 s = origin - a;
+	const float u = d * Dot(s, normal);
 	if (u < 0.0 || u > 1.0)
 		return false;
-	q = Cross(s, edge1);
-	v = d * Dot(direction, q);
-	if (v < 0.0 || (double)u + v > 1.0)
+	const Vector3 q = Cross(s, edge1);
+	const float v = d * Dot(direction, q);
+	if (v < 0.0 || static_cast<double>(u) + v > 1.0)
 		return false;
 	
-	float t = d * Dot(edge2, q);
+	const float t = d * Dot(edge2, q);
 	if (t > FLT_EPSILON)
 	{
 		intersection = origin + direction * t;
@@ -258,19 +252,17 @@ Vector3 Vector3::Normalize() const
 //Vector2
 bool Vector2::operator==(Vector2 const& p) const
 {
-	Vector2 p2(*this - p);
-	return (double)p2.SqrMagnitude() < DBL_EPSILON;
+	return static_cast<double>((*this - p).SqrMagnitude())< DBL_EPSILON;
 }
 
 bool Vector2::operator!=(Vector2 const& p) const
 {
-	Vector2 p2(*this - p);
-	return (double)p2.SqrMagnitude() >= DBL_EPSILON;
+	return static_cast<double>((*this - p).SqrMagnitude()) >= DBL_EPSILON;
 }
 
 float Vector2::SqrMagnitude() const
 {
-	return (float)((double)x * (double)x + (double)y * (double)y);
+	return static_cast<float>(static_cast<double>(x) * x + static_cast<double>(y) * y);
 }
 
 float Vector2::Magnitude() const
@@ -313,9 +305,9 @@ Vector2 Vector2::LerpNoClamp(const Vector2& from, const Vector2& to, float delta
 
 Vector2 Vector2::MoveTowards(const Vector2& from, const Vector2& to, float delta)
 {
-	Vector2 direction = to - from;
+	const Vector2 direction = to - from;
 
-	float magnitude = direction.Magnitude();
+	const float magnitude = direction.Magnitude();
 
 	if (magnitude <= delta || delta < FLT_EPSILON)
 	{
@@ -327,7 +319,7 @@ Vector2 Vector2::MoveTowards(const Vector2& from, const Vector2& to, float delta
 
 Vector2 Vector2::Reflect(const Vector2& vector, const Vector2& normal)
 {
-	float dp = -2 * Dot(normal, vector);
+	const float dp = -2 * Dot(normal, vector);
 	return Vector2(dp * normal.x + vector.x, dp * normal.y + vector.y);
 }
 
@@ -337,15 +329,16 @@ Vector2 Vector2::Perpendicular(const Vector2& vector)
 }
 
 float Vector2::TriangleArea(const Vector2& a, const Vector2& b, const Vector2& c) {
-	return (float)abs(((double)a.x * ((double)b.y - c.y) + (double)b.x * ((double)c.y - a.y) + (double)c.x * ((double)a.y - b.y)) / 2.0);
+	return static_cast<float>(abs((static_cast<double>(a.x) * (static_cast<double>(b.y) - c.y) + static_cast<double>(b.x) * 
+		(static_cast<double>(c.y) - a.y) + static_cast<double>(c.x) * (static_cast<double>(a.y) - b.y)) / 2.0));
 }
 
 bool Vector2::PointTriangleIntersection(const Vector2& point, const Vector2& a, const Vector2& b, const Vector2& c) {
-	float area = TriangleArea(a, b, c);
+	const float area = TriangleArea(a, b, c);
 
-	float area1 = TriangleArea(point, b, c);
-	float area2 = TriangleArea(a, point, c);
-	float area3 = TriangleArea(a, b, point);
+	const float area1 = TriangleArea(point, b, c);
+	const float area2 = TriangleArea(a, point, c);
+	const float area3 = TriangleArea(a, b, point);
 
 	return fabs(area - (area1 + area2 + area3)) < FLT_EPSILON;
 }

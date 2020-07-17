@@ -54,13 +54,7 @@ struct Vector4
 		w = 0;
 	}
 
-	Vector4(const Vector4& other)
-	  : x(other.x),
-		y(other.y),
-		z(other.z),
-		w(other.w)
-	{
-	}
+	Vector4(const Vector4& other) = default;
 
 	Vector4(Vector4&& other) noexcept
 	  : x(other.x),
@@ -75,22 +69,22 @@ struct Vector4
 	~Vector4() = default;
 
 	/// Arithmetic operators
-	Vector4 operator + (Vector4 const& p) const
+	Vector4 operator + (const Vector4& p) const
 	{
 		return Vector4(x + p.x, y + p.y, z + p.z, w + p.w);
 	}
 
-	Vector4 operator - (Vector4 const& p) const
+	Vector4 operator - (const Vector4& p) const
 	{
 		return Vector4(x - p.x, y - p.y, z - p.z, w - p.w);
 	}
 
-	Vector4 operator * (Vector4 const& p) const
+	Vector4 operator * (const Vector4& p) const
 	{
 		return Vector4(x * p.x, y * p.y, z * p.z, w * p.w);
 	}
 
-	Vector4 operator / (Vector4 const& p) const
+	Vector4 operator / (const Vector4& p) const
 	{
 		return Vector4(x / p.x, y / p.y, z / p.z, w / p.w);
 	}
@@ -118,79 +112,79 @@ struct Vector4
 		return *this;
 	}
 
-	Vector4 operator += (Vector4 const& p)
+	Vector4 operator += (const Vector4& p)
 	{
 		x += p.x; y += p.y; z += p.z; w += p.w;
 		return *this;
 	}
 
-	Vector4 operator -= (Vector4 const& p)
+	Vector4 operator -= (const Vector4& p)
 	{
 		x -= p.x; y -= p.y; z -= p.z; w -= p.w;
 		return *this;
 	}
 
-	Vector4 operator *= (Vector4 const& p)
+	Vector4 operator *= (const Vector4& p)
 	{
 		x *= p.x; y *= p.y; z *= p.z; w *= p.w;
 		return *this;
 	}
 
-	Vector4 operator /= (Vector4 const& p)
+	Vector4 operator /= (const Vector4& p)
 	{
 		x /= p.x; y /= p.y; z /= p.z; w /= p.w;
 		return *this;
 	}
 
 	/// Arithmetic operators for float
-	Vector4 operator + (float const& p) const
+	Vector4 operator + (const float p) const
 	{
 		return Vector4(x + p, y + p, z + p, w +p);
 	}
 
-	Vector4 operator - (float const& p) const
+	Vector4 operator - (const float p) const
 	{
 		return Vector4(x - p, y - p, z - p, w - p);
 	}
 
-	Vector4 operator * (float const& p) const
+	Vector4 operator * (const float p) const
 	{
 		return Vector4(x * p, y * p, z * p, w * p);
 	}
 
-	Vector4 operator / (float const& p) const
+	Vector4 operator / (const float p) const
 	{
 		return Vector4(x / p, y / p, z / p, w / p);
 	}
 
 	/// Assignation operators for float
-	Vector4 operator += (float const& p)
+	Vector4 operator += (const float p)
 	{
 		x += p; y += p; z += p; w += p;
 		return *this;
 	}
 
-	Vector4 operator -= (float const& p)
+	Vector4 operator -= (const float p)
 	{
 		x -= p; y -= p; z -= p; w -= p;
 		return *this;
 	}
 
-	Vector4 operator *= (float const& p)
+	Vector4 operator *= (const float p)
 	{
 		x *= p; y *= p; z *= p; w *= p;
 		return *this;
 	}
 
-	Vector4 operator /= (float const& p)
+	Vector4 operator /= (const float p)
 	{
 		x /= p; y /= p; z /= p; w /= p;
 		return *this;
 	}
 
 	//Logical operators
-	bool operator == (Vector4 const& p) const;
-	bool operator !=(Vector4 const& p) const;
+	bool operator == (const Vector4& p) const;
+	bool operator !=(const Vector4& p) const;
 };
 
 //Vector3 definition
@@ -278,12 +272,7 @@ struct Vector3 {
 		z = 0;
 	}
 
-	Vector3(const Vector3& other)
-		: x(other.x),
-		  y(other.y),
-		  z(other.z)
-	{
-	}
+	Vector3(const Vector3& other) = default;
 
 	Vector3(Vector3&& other) noexcept
 		: x(other.x),
@@ -297,22 +286,22 @@ struct Vector3 {
 	~Vector3() = default;
 
 	/// Arithmetic operators
-	Vector3 operator + (Vector3 const& p) const
+	Vector3 operator + (const Vector3& p) const
 	{
 		return Vector3(x + p.x, y + p.y, z + p.z);
 	}
 
-	Vector3 operator - (Vector3 const& p) const
+	Vector3 operator - (const Vector3& p) const
 	{
 		return Vector3(x - p.x, y - p.y, z - p.z);
 	}
 
-	Vector3 operator * (Vector3 const& p) const
+	Vector3 operator * (const Vector3& p) const
 	{
 		return Vector3(x * p.x, y * p.y, z * p.z);
 	}
 
-	Vector3 operator / (Vector3 const& p) const
+	Vector3 operator / (const Vector3& p) const
 	{
 		return Vector3(x / p.x, y / p.y, z / p.z);
 	}
@@ -338,79 +327,79 @@ struct Vector3 {
 		return *this;
 	}
 	
-	Vector3 operator += (Vector3 const& p)
+	Vector3 operator += (const Vector3& p)
 	{
 		x += p.x; y += p.y; z += p.z;
 		return *this;
 	}
 
-	Vector3 operator -= (Vector3 const& p)
+	Vector3 operator -= (const Vector3& p)
 	{
 		x -= p.x; y -= p.y; z -= p.z;
 		return *this;
 	}
 
-	Vector3 operator *= (Vector3 const& p)
+	Vector3 operator *= (const Vector3& p)
 	{
 		x *= p.x; y *= p.y; z *= p.z;
 		return *this;
 	}
 
-	Vector3 operator /= (Vector3 const& p)
+	Vector3 operator /= (const Vector3& p)
 	{
 		x /= p.x; y /= p.y; z /= p.z;
 		return *this;
 	}
 
 	/// Arithmetic operators for float
-	Vector3 operator + (float const& p) const
+	Vector3 operator + (const float p) const
 	{
 		return Vector3(x + p, y + p, z + p);
 	}
 
-	Vector3 operator - (float const& p) const
+	Vector3 operator - (const float p) const
 	{
 		return Vector3(x - p, y - p, z - p);
 	}
 
-	Vector3 operator * (float const& p) const
+	Vector3 operator * (const float p) const
 	{
 		return Vector3(x * p, y * p, z * p);
 	}
 
-	Vector3 operator / (float const& p) const
+	Vector3 operator / (const float p) const
 	{
 		return Vector3(x / p, y / p, z / p);
 	}
 
 	/// Assignation operators for float
-	Vector3 operator += (float const& p)
+	Vector3 operator += (const float p)
 	{
 		x += p; y += p; z += p;
 		return *this;
 	}
 
-	Vector3 operator -= (float const& p)
+	Vector3 operator -= (const float p)
 	{
 		x -= p; y -= p; z -= p;
 		return *this;
 	}
 
-	Vector3 operator *= (float const& p)
+	Vector3 operator *= (const float p)
 	{
 		x *= p; y *= p; z *= p;
 		return *this;
 	}
 
-	Vector3 operator /= (float const& p)
+	Vector3 operator /= (const float p)
 	{
 		x /= p; y /= p; z /= p;
 		return *this;
 	}
 
 	//Logical operators
-	bool operator == (Vector3 const& p) const;
-	bool operator !=(Vector3 const& p) const;
+	bool operator == (const Vector3& p) const;
+	bool operator !=(const Vector3& p) const;
 };
 
 
@@ -482,11 +471,7 @@ struct Vector2
 		y = 0;
 	}
 
-	Vector2(const Vector2& other)
-	  : x(other.x),
-		y(other.y)
-	{
-	}
+	Vector2(const Vector2& other) = default;
 
 	Vector2(Vector2&& other) noexcept
 	  : x(other.x),
@@ -499,22 +484,22 @@ struct Vector2
 	~Vector2() = default;
 
 	/// Arithmetic operators
-	Vector2 operator + (Vector2 const& p) const
+	Vector2 operator + (const Vector2& p) const
 	{
 		return Vector2(x + p.x, y + p.y);
 	}
 
-	Vector2 operator - (Vector2 const& p) const
+	Vector2 operator - (const Vector2& p) const
 	{
 		return Vector2(x - p.x, y - p.y);
 	}
 
-	Vector2 operator * (Vector2 const& p) const
+	Vector2 operator * (const Vector2& p) const
 	{
 		return Vector2(x * p.x, y * p.y);
 	}
 
-	Vector2 operator / (Vector2 const& p) const
+	Vector2 operator / (const Vector2& p) const
 	{
 		return Vector2(x / p.x, y / p.y);
 	}
@@ -538,77 +523,77 @@ struct Vector2
 		return *this;
 	}
 
-	Vector2 operator += (Vector2 const& p)
+	Vector2 operator += (const Vector2& p)
 	{
 		x += p.x; y += p.y;
 		return *this;
 	}
 
-	Vector2 operator -= (Vector2 const& p)
+	Vector2 operator -= (const Vector2& p)
 	{
 		x -= p.x; y -= p.y;
 		return *this;
 	}
 
-	Vector2 operator *= (Vector2 const& p)
+	Vector2 operator *= (const Vector2& p)
 	{
 		x *= p.x; y *= p.y;
 		return *this;
 	}
 
-	Vector2 operator /= (Vector2 const& p)
+	Vector2 operator /= (const Vector2& p)
 	{
 		x /= p.x; y /= p.y;
 		return *this;
 	}
 
 	/// Arithmetic operators for float
-	Vector2 operator + (float const& p) const
+	Vector2 operator + (const float p) const
 	{
 		return Vector2(x + p, y + p);
 	}
 
-	Vector2 operator - (float const& p) const
+	Vector2 operator - (const float p) const
 	{
 		return Vector2(x - p, y - p);
 	}
 
-	Vector2 operator * (float const& p) const
+	Vector2 operator * (const float p) const
 	{
 		return Vector2(x * p, y * p);
 	}
 
-	Vector2 operator / (float const& p) const
+	Vector2 operator / (const float p) const
 	{
 		return Vector2(x / p, y / p);
 	}
 
 	/// Assignation operators for float
-	Vector2 operator += (float const& p)
+	Vector2 operator += (const float p)
 	{
 		x += p; y += p;
 		return *this;
 	}
 
-	Vector2 operator -= (float const& p)
+	Vector2 operator -= (const float p)
 	{
 		x -= p; y -= p;
 		return *this;
 	}
 
-	Vector2 operator *= (float const& p)
+	Vector2 operator *= (const float p)
 	{
 		x *= p; y *= p;
 		return *this;
 	}
 
-	Vector2 operator /= (float const& p)
+	Vector2 operator /= (const float p)
 	{
 		x /= p; y /= p;
 		return *this;
 	}
 
 	//Logical operators
-	bool operator == (Vector2 const& p) const;
-	bool operator !=(Vector2 const& p) const;
+	bool operator == (const Vector2& p) const;
+	bool operator !=(const Vector2& p) const;
 };
